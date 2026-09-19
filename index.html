@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NebulaForge Handbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #14151f;
+    --bg-raised: #1b1c29;
+    --ink: #c9cbd6;
+    --ink-dim: #83869c;
+    --rule: #2a2c3d;
+    --link: #a889d8;
+    --link-visited: #7d6aa8;
+    --code: #d8a657;
+    font-size: 17px;
+  }
+  :root[data-theme="light"] {
+    --bg: #fbfaf6;
+    --bg-raised: #f0eee6;
+    --ink: #24242c;
+    --ink-dim: #63637a;
+    --rule: #d9d6cb;
+    --link: #6f4fa3;
+    --link-visited: #8a6bb8;
+    --code: #93641c;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Source Serif 4', Georgia, serif;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  a { color: var(--link); }
+  a:visited { color: var(--link-visited); }
+
+  code, pre {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+  }
+  code {
+    font-size: 0.85em;
+    color: var(--code);
+  }
+  pre {
+    background: var(--bg-raised);
+    border: 1px solid var(--rule);
+    padding: 0.9rem 1.1rem;
+    overflow-x: auto;
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+  pre code { color: var(--ink); }
+
+  .navheader {
+    border-bottom: 1px solid var(--rule);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--ink-dim);
+    padding: 0.6rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .navheader a { color: var(--ink-dim); }
+  .navheader a:hover { color: var(--link); }
+
+  .wrap {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0 1.5rem 6rem;
+  }
+
+  .booktitle {
+    text-align: center;
+    padding: 3rem 0 2.5rem;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 2.5rem;
+  }
+  .booktitle h1 {
+    font-size: 1.9rem;
+    font-weight: 600;
+    margin: 0 0 0.4rem;
+  }
+  .booktitle .ver {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--ink-dim);
+  }
+
+  .toc { margin: 2rem 0 3rem; }
+  .toc-title { font-weight: 600; font-size: 1.1rem; margin-bottom: 0.8rem; }
+  .toc ol { padding-left: 1.4rem; margin: 0; }
+  .toc li { margin: 0.25rem 0; }
+  .toc ol ol { padding-left: 1.6rem; font-size: 0.95rem; }
+
+  .chapter { margin-top: 3.5rem; }
+  h2.chapter-head {
+    font-size: 1.5rem;
+    font-weight: 600;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 0.4rem;
+    margin-bottom: 1.2rem;
+  }
+  h3.sect { font-size: 1.1rem; font-weight: 600; margin: 1.8rem 0 0.6rem; }
+  .sect-num { color: var(--ink-dim); font-weight: 400; margin-right: 0.3rem; }
+
+  p { margin: 0.85rem 0; }
+
+  dl.varlist { margin: 1rem 0; }
+  dl.varlist dt { font-family: 'JetBrains Mono', monospace; font-size: 0.88rem; margin-top: 0.7rem; }
+  dl.varlist dd { margin: 0.2rem 0 0 1.2rem; color: var(--ink-dim); }
+
+  table.simplelist {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.2rem 0;
+    font-size: 0.92rem;
+  }
+  table.simplelist th, table.simplelist td {
+    text-align: left;
+    padding: 0.35rem 0.6rem 0.35rem 0;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  table.simplelist th { color: var(--ink-dim); font-weight: 400; font-size: 0.8rem; }
+
+  .status-ok::before { content: "[ok] "; color: #8fae7a; font-family: 'JetBrains Mono', monospace; font-size: 0.8em; }
+  .status-rough::before { content: "[rough] "; color: var(--code); font-family: 'JetBrains Mono', monospace; font-size: 0.8em; }
+  .status-todo::before { content: "[todo] "; color: var(--ink-dim); font-family: 'JetBrains Mono', monospace; font-size: 0.8em; }
+
+  .note {
+    border-left: 3px solid var(--rule);
+    padding-left: 1rem;
+    margin: 1.2rem 0;
+    font-size: 0.95rem;
+    color: var(--ink-dim);
+  }
+  .note .note-label { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; display: block; margin-bottom: 0.2rem; }
+
+  .navfooter {
+    border-top: 1px solid var(--rule);
+    margin-top: 4rem;
+    padding-top: 1rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--ink-dim);
+  }
+
+  .theme-toggle {
+    position: fixed;
+    top: 0.7rem;
+    right: 1rem;
+    background: none;
+    border: 1px solid var(--rule);
+    color: var(--ink-dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    padding: 0.25rem 0.55rem;
+    cursor: pointer;
+  }
+  .theme-toggle:hover { color: var(--link); border-color: var(--link); }
+
+  @media (max-width: 600px) {
+    :root { font-size: 16px; }
+    .navheader { flex-direction: column; gap: 0.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle color theme">theme</button>
+
+<div class="navheader">
+  <span>NebulaForge Handbook</span>
+  <span><a href="#toc">Contents</a></span>
+</div>
+
+<div class="wrap">
+
+  <div class="booktitle">
+    <h1>NebulaForge Handbook</h1>
+    <div class="ver">version 1.0 — last edited by hand, not on a schedule</div>
+  </div>
+
+  <p>This is the documentation for NebulaForge, a Linux system built from source starting from an existing LFS install. It covers what's actually in the system, how the package manager works, and a couple of things that broke badly enough that I didn't want to forget how I fixed them.</p>
+
+  <p>It is not a tutorial and it is not trying to sell you anything. If you're not the person who built this, most of it probably won't apply to your hardware.</p>
+
+  <div class="toc" id="toc">
+    <div class="toc-title">Table of Contents</div>
+    <ol>
+      <li><a href="#ch1">Introduction</a>
+        <ol>
+          <li><a href="#s1-1">What this is</a></li>
+          <li><a href="#s1-2">Where it came from</a></li>
+        </ol>
+      </li>
+      <li><a href="#ch2">Orbital</a>
+        <ol>
+          <li><a href="#s2-1">Why it exists</a></li>
+          <li><a href="#s2-2">Recipe format</a></li>
+          <li><a href="#s2-3">Commands</a></li>
+          <li><a href="#s2-4">Limits</a></li>
+        </ol>
+      </li>
+      <li><a href="#ch3">The desktop</a></li>
+      <li><a href="#ch4">The Nvidia driver problem</a></li>
+      <li><a href="#ch5">Current status</a></li>
+      <li><a href="#ch6">Installing on a fresh machine</a>
+        <ol>
+          <li><a href="#s6-1">What you need first</a></li>
+          <li><a href="#s6-2">Partition the disk</a></li>
+          <li><a href="#s6-3">Extract the base system</a></li>
+          <li><a href="#s6-4">Chroot in and fix the basics</a></li>
+          <li><a href="#s6-5">Bootloader</a></li>
+          <li><a href="#s6-6">Everything after that is up to you</a></li>
+        </ol>
+      </li>
+    </ol>
+  </div>
+
+  <div class="chapter" id="ch1">
+    <h2 class="chapter-head">Chapter 1. Introduction</h2>
+
+    <h3 class="sect" id="s1-1"><span class="sect-num">1.1.</span>What this is</h3>
+    <p>NebulaForge is a source-based Linux system. Almost everything on it was built from a tarball with <code>make</code>, <code>cmake</code>, or a hand-written build script, the same way LFS itself is built. There's no package repository and no binary packages. If you want software on it, you compile it.</p>
+
+    <h3 class="sect" id="s1-2"><span class="sect-num">1.2.</span>Where it came from</h3>
+    <p>It's a copy of an already-working LFS install. Same kernel, same toolchain. I imaged the original system and kept experimenting on the copy so I wouldn't wreck the one I'd already spent time on. The original is still on its own partition, unchanged.</p>
+    <p>It has since become its own thing: own partition, own GRUB entry, own kernel it boots without a chroot. <code>/etc/os-release</code> reports it as <code>NebulaForge Linux 1.0</code>. The hostname still says <code>lfs</code>. I haven't fixed that.</p>
+  </div>
+
+  <div class="chapter" id="ch2">
+    <h2 class="chapter-head">Chapter 2. Orbital</h2>
+
+    <h3 class="sect" id="s2-1"><span class="sect-num">2.1.</span>Why it exists</h3>
+    <p>Typing <code>./configure && make && make install</code> by hand for every package gets old. Orbital is a small Python script that does three things: downloads a source tarball, builds it, and remembers what got installed so it can be removed later. That's the whole scope.</p>
+
+    <h3 class="sect" id="s2-2"><span class="sect-num">2.2.</span>Recipe format</h3>
+    <p>A recipe is a Python file. Most of them don't need real code — if the project builds with <code>make</code>, <code>cmake</code>, or <code>autotools</code>, this is the entire recipe:</p>
+
+<pre><code>name = "btop"
+version = "1.4.7"
+source_url = "https://github.com/aristocratos/btop/archive/refs/tags/v1.4.7.tar.gz"
+sha256 = None
+dependencies = []
+build_system = "make"</code></pre>
+
+    <p>Orbital fills in the actual build and install commands from the <code>build_system</code> line. Projects that don't fit that pattern — Firefox's own build tool, cargo, meson — get a short <code>build()</code> and <code>install()</code> function instead. That's the only escape hatch, and it's used maybe a dozen times across the whole recipe set.</p>
+
+    <h3 class="sect" id="s2-3"><span class="sect-num">2.3.</span>Commands</h3>
+    <table class="simplelist">
+      <tr><th>command</th><th>does</th></tr>
+      <tr><td><code>orbital install NAME</code></td><td>fetch, build, install</td></tr>
+      <tr><td><code>orbital remove NAME</code></td><td>uninstall using the recorded file list</td></tr>
+      <tr><td><code>orbital list</code></td><td>everything currently installed</td></tr>
+      <tr><td><code>orbital info NAME</code></td><td>version, file count, size on disk, missing files</td></tr>
+      <tr><td><code>orbital resume</code></td><td>pick a crashed or interrupted install back up</td></tr>
+      <tr><td><code>orbital search TERM</code></td><td>check local recipes and the built-in list</td></tr>
+      <tr><td><code>orbital edit-recipe NAME</code></td><td>open a recipe, or a blank template, in <code>$EDITOR</code></td></tr>
+    </table>
+
+    <div class="note">
+      <span class="note-label">note</span>
+      <code>orbital resume</code> reuses whatever was already downloaded and extracted. It doesn't start a build over from nothing. This mattered once, during a kernel-module build, more than I expected it to.
+    </div>
+
+    <h3 class="sect" id="s2-4"><span class="sect-num">2.4.</span>Limits</h3>
+    <p>There's no dependency resolver worth the name — it walks a flat list, it doesn't solve version conflicts. There's no signing, no binary packages, no mirrors. The built-in list of zero-config packages is small because every entry in it got added by hand, one at a time, when I happened to want that package. It is not trying to be apt or pacman. It's trying to be less typing than doing it manually.</p>
+  </div>
+
+  <div class="chapter" id="ch3">
+    <h2 class="chapter-head">Chapter 3. The desktop</h2>
+    <p>bspwm, sxhkd, polybar, picom, kitty. A common combination, not an original one. Colors are adapted from a rice called Emilia, which is itself a Tokyo Night palette — dark navy background, muted purple and blue borders.</p>
+
+<pre><code>bspc config normal_border_color   "#414868"
+bspc config focused_border_color  "#bb9af7"
+bspc config presel_feedback_color "#583794"</code></pre>
+
+    <p>picom runs for transparency and shadows. kitty sits at 85% opacity. polybar shows workspaces, the clock, and CPU/memory, and nothing else — I didn't add modules I wasn't going to look at.</p>
+    <p>neofetch's ASCII art is a Saturn rendering instead of the default logo, found on an old ASCII-art archive with no listed author.</p>
+  </div>
+
+  <div class="chapter" id="ch4">
+    <h2 class="chapter-head">Chapter 4. The Nvidia driver problem</h2>
+    <p>This chapter exists so I don't have to solve this twice. Getting Nvidia's driver to build against a hand-built kernel took several wrong turns before the real problem showed up.</p>
+
+    <h3 class="sect"><span class="sect-num">4.1.</span>Renamed kernel functions</h3>
+    <p>The build failed on <code>sys_close</code>, which doesn't exist in this kernel version anymore. Patched it to <code>ksys_close</code>. That didn't exist either — the real name in this kernel is <code>close_fd</code>, found by grepping the actual kernel headers instead of trusting a forum post. Same thing happened with <code>del_timer_sync</code>, which is now <code>timer_delete_sync</code>, in two separate files.</p>
+
+    <h3 class="sect"><span class="sect-num">4.2.</span>The actual problem</h3>
+    <p>With every rename fixed, the build failed at the link stage with pages of undefined-symbol errors for things as ordinary as <code>memcpy</code>. That's not a compatibility problem. That's a missing <code>Module.symvers</code> file, and it's only generated by a full kernel build. Every attempt up to that point had used the lighter <code>make modules_prepare</code>, which skips it. One full <code>make -j$(nproc)</code> later, the file existed, and the driver linked without complaint.</p>
+
+    <div class="note">
+      <span class="note-label">note</span>
+      The renamed functions were real. They also weren't the actual issue — every patch before the full kernel build was necessary and none of them were sufficient on their own.
+    </div>
+
+    <p>Moving the working driver to the second machine was simpler: copy the five resulting <code>.ko</code> files and the userspace libraries over, run <code>depmod</code> for the right kernel version, run <code>nvidia-xconfig</code>. No patching needed a second time.</p>
+  </div>
+
+  <div class="chapter" id="ch5">
+    <h2 class="chapter-head">Chapter 5. Current status</h2>
+    <p>What's actually working, as of this writing.</p>
+    <dl class="varlist">
+      <dt class="status-ok">bspwm / sxhkd / polybar / picom / kitty</dt>
+      <dd>running with transparency, on both systems</dd>
+      <dt class="status-ok">Nvidia acceleration</dt>
+      <dd>working on both systems, see Chapter 4</dd>
+      <dt class="status-ok">Orbital</dt>
+      <dd>install, remove, resume, atomic database writes</dd>
+      <dt class="status-ok">Standalone boot</dt>
+      <dd>own partition, own GRUB entry, no chroot required</dd>
+      <dt class="status-rough">Audio</dt>
+      <dd>pipewire is built, not yet the default output</dd>
+      <dt class="status-todo">Wi-Fi</dt>
+      <dd>needs the wireless driver rebuilt against this kernel; not started</dd>
+      <dt class="status-todo">Installer</dt>
+      <dd>no way to put this on a fresh machine yet</dd>
+      <dt class="status-todo">Konsole</dt>
+      <dd>blocked on KDE frameworks this system doesn't have built yet</dd>
+    </dl>
+  </div>
+
+  <div class="chapter" id="ch6">
+    <h2 class="chapter-head">Chapter 6. Installing on a fresh machine</h2>
+    <p>There's no installer program and there isn't going to be one. NebulaForge is source-based on purpose — the whole point of running something like this is deciding for yourself what goes on the machine, not answering a wizard's questions and getting whatever it decided to give you. What follows is the manual process, the same one used to put NebulaForge on its own partition in the first place. Every command in this chapter has actually been run.</p>
+
+    <div class="note">
+      <span class="note-label">note</span>
+      This gets you a booting base system with a network connection and a compiler. Everything past that — desktop, drivers, anything else in this handbook — is Chapter 2 through 5 done again by hand, or copied over from an existing install. Nothing here decides that for you.
+    </div>
+
+    <h3 class="sect" id="s6-1"><span class="sect-num">6.1.</span>What you need first</h3>
+    <p>A machine, a second working Linux system to build the target from (any live USB will do — Gentoo, Void, Arch, whatever's on hand), and the base tarball:</p>
+
+<pre><code>tar --numeric-owner --xattrs -cJf nebulaforge-base.tar.xz \
+  --exclude='./proc/*' --exclude='./sys/*' --exclude='./dev/*' \
+  --exclude='./tmp/*'  --exclude='./run/*' \
+  -C /path/to/nebulaforge .</code></pre>
+
+    <p>That's the command that makes the tarball in the first place, run from a system that already has NebulaForge on it. If you're the one installing rather than the one producing the tarball, you just need the resulting file.</p>
+
+    <h3 class="sect" id="s6-2"><span class="sect-num">6.2.</span>Partition the disk</h3>
+    <p>However you want. This is not prescriptive — one partition, an existing layout with room made for one more, LVM, whatever suits the machine. The only requirement is a partition big enough for the base system (currently around 6 GB compressed, more once it's extracted and you've built anything on top of it) formatted as something Linux can boot from:</p>
+
+<pre><code>mkfs.ext4 -L NEBULAFORGE /dev/sdXN</code></pre>
+
+    <p>Replace <code>/dev/sdXN</code> with the actual partition. Check with <code>lsblk</code> first. Confirm it twice. This step doesn't ask again.</p>
+
+    <h3 class="sect" id="s6-3"><span class="sect-num">6.3.</span>Extract the base system</h3>
+<pre><code>mkdir -p /mnt/target
+mount /dev/sdXN /mnt/target
+tar --numeric-owner --xattrs -xJf nebulaforge-base.tar.xz -C /mnt/target</code></pre>
+
+    <p>That's the entire install step. Everything that makes NebulaForge what it is — Orbital, the toolchain, whatever recipes existed at tarball time — is now sitting on the new partition.</p>
+
+    <h3 class="sect" id="s6-4"><span class="sect-num">6.4.</span>Chroot in and fix the basics</h3>
+    <p>The tarball doesn't know what disk it landed on, so a couple of things need correcting before it'll boot on its own.</p>
+
+<pre><code>mount --bind /dev  /mnt/target/dev
+mount --bind /proc /mnt/target/proc
+mount --bind /sys  /mnt/target/sys
+mount --bind /dev/pts /mnt/target/dev/pts
+cp /etc/resolv.conf /mnt/target/etc/resolv.conf
+chroot /mnt/target /bin/bash
+source /etc/profile</code></pre>
+
+    <p>Inside the chroot, find the new partition's UUID and put it in <code>/etc/fstab</code>:</p>
+
+<pre><code>blkid /dev/sdXN
+sed -i 's/UUID=OLD-UUID-HERE/UUID=YOUR-NEW-UUID/' /etc/fstab</code></pre>
+
+    <p>The old UUID in the tarball's <code>fstab</code> belongs to the machine it was built on. It has to be replaced or the system won't mount its own root on boot.</p>
+
+    <h3 class="sect" id="s6-5"><span class="sect-num">6.5.</span>Bootloader</h3>
+    <p>If the machine already runs GRUB for something else, <code>os-prober</code> will usually find the new install on its own:</p>
+
+<pre><code>grub-mkconfig -o /boot/grub/grub.cfg</code></pre>
+
+    <p>Check the generated entry before trusting it — specifically the <code>root=</code> line the kernel gets booted with. If <code>os-prober</code> picked up a stale root device from somewhere else on the disk, it'll be wrong, and the fix is a plain text edit to that one line in <code>grub.cfg</code>. This happened once already; it's not rare.</p>
+    <p>If there's no existing bootloader at all, install one from inside the chroot the normal way for whatever hardware this is (BIOS or UEFI). That part isn't NebulaForge-specific and isn't covered here.</p>
+
+    <h3 class="sect" id="s6-6"><span class="sect-num">6.6.</span>Everything after that is up to you</h3>
+    <p>At this point there's a bootable machine with a base toolchain, Orbital, and whatever recipes were in <code>/etc/orbital/recipes</code> at the moment the tarball was made — no desktop, no drivers, no assumptions. What goes on top is Chapters 2 through 5 of this handbook, done again by hand, or skipped entirely in favor of something else. That's the actual point of building it this way.</p>
+  </div>
+
+  <div class="navfooter">
+    NebulaForge Handbook — describes the system as it exists right now, updated when something changes, not on any particular schedule.
+  </div>
+
+</div>
+
+<script>
+  function toggleTheme() {
+    const root = document.documentElement;
+    root.setAttribute('data-theme', root.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
+  }
+</script>
+
+</body>
+</html>
